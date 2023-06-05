@@ -18,17 +18,20 @@ class Server {
         //CORS
         this.app.use(cors());
 
+        //Body reading and parsing
+        this.app.use(express.json());
+
         //Public directory
-        this.app.use(express.static('public'))
+        this.app.use(express.static('public'));
     }
 
     routes() {
-        this.app.use(this.usersPath, require('../routes/user'))
+        this.app.use(this.usersPath, require('../routes/user'));
     }
 
     listen() {
         this.app.listen(this.port, () => {
-            console.log(`Server running at port: ${this.port}`)
+            console.log(`Server running at port: ${this.port}`);
         });
     }
 }
