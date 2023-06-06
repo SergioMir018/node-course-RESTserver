@@ -4,12 +4,7 @@ require('dotenv').config();
 const dbConnection = async() => {
     try {
 
-        await mongoose.connect('mongodb+srv://SergioMir:mSUSaXu1P7keh4OZ@cluster0.bdovo4t.mongodb.net/NodeCourseDB', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify:false
-        });
+        await mongoose.connect(process.env.DB_CNN);
 
         console.log('DB Online');
 
