@@ -7,19 +7,19 @@ const UserSchema = Schema({
     },
     email: {
         type: String,
-        require: [true, 'Email is required'],
+        required: [true, 'Email is required'],
         unique: true
     },
     password: {
         type: String,
-        require: [true, 'Password is required']
+        required: [true, 'Password is required']
     },
     img: {
         type: String
     },
     role: {
         type: String,
-        require: true,
+        required: true,
         enum: ['ADMIN_ROLE', 'USER_ROLE']
     },
     state: {
@@ -32,4 +32,4 @@ const UserSchema = Schema({
     }
 });
 
-module.exports = model('Users', UserSchema);
+module.exports = model('User', UserSchema);
