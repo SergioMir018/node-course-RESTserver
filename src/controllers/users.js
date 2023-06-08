@@ -24,8 +24,8 @@ const usersPut = (req, res = response) => {
 
 const usersPost =async(req, res = response) => {
 
-    const body = req.body;
-    const user = new User(body);
+    const {name, email, password, role} = req.body;
+    const user = new User({name, email, password, role});
 
     await user.save();
 
