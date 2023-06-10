@@ -15,17 +15,18 @@ const usersGet = (req, res = response) => {
     });
 }
 
-const usersPut = (req, res = response) => {
+const usersPut = async(req, res = response) => {
     const { id } = req.params;
-    const { password, google, ...rest } = req.body;
+    const { _id, password, google, email, ...rest } = req.body;
 
     if(password) {
-
+        rest.password = encryptPassword(password);
     }
 
+    const user = await User.findByIdAndUpdate(id, rest);
+
     res.json({
-        msg: 'put API - controller',
-        id
+        user
     });
 }
 
