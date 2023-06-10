@@ -4,14 +4,29 @@ const User = require('../models/user');
 const { encryptPassword } = require("../helpers/password-encrypt");
 
 
-const usersGet = (req, res = response) => {
-    const {q, name, apikey} = req.query
+const usersGet = async(req, res = response) => {
+    const { limit = 5, from = 0 } = req.query;
+    const queryState = { state: true };
+
+    if (isNaN(limit)) {
+		return res.status(400).json({
+			msg: `The limit value is not a valid number`,
+		});
+	}
+
+	if (isNaN(from)) {
+		return res.status(400).json({
+			msg: `The from value is not a valid number`,
+		});
+	}
+
+    const resp = await Promise.all([
+			User.countDocuments(queryState),
+			User.find(queryState).skip(from).limit(limit),
+		]);
 
     res.json({
-        msg: 'get API - controller',
-        q,
-        name,
-        apikey
+        resp
     });
 }
 
@@ -25,9 +40,7 @@ const usersPut = async(req, res = response) => {
 
     const user = await User.findByIdAndUpdate(id, rest);
 
-    res.json({
-        user
-    });
+    res.json(user);
 }
 
 const usersPost =async(req, res = response) => {
@@ -41,9 +54,7 @@ const usersPost =async(req, res = response) => {
     //Save in the database
     await user.save();
 
-    res.json({
-        user
-    });
+    res.json(user);
 }
 
 const usersDelete = (req, res = response) => {
