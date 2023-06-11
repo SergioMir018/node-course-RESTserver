@@ -1,12 +1,14 @@
 const { Router } = require('express');
-
-const { usersGet,
-  usersPut,
-  usersPost,
-  usersDelete,
-  usersPatch } = require('../controllers/users');
-
 const { check } = require('express-validator');
+
+const { 
+	usersGet,
+  	usersPut,
+  	usersPost,
+  	usersDelete,
+  	usersPatch 
+} = require('../controllers/usersController');
+
 const { validateFields } = require('../middlewares/validate-fields');
 const {
 	isValidRole,
