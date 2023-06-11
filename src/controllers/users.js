@@ -1,4 +1,4 @@
-const {response} = require('express');
+const {response, query} = require('express');
 
 const User = require('../models/user');
 const { encryptPassword } = require("../helpers/password-encrypt");
@@ -20,13 +20,14 @@ const usersGet = async(req, res = response) => {
 		});
 	}
 
-    const resp = await Promise.all([
+    const [ total, users] = await Promise.all([
 			User.countDocuments(queryState),
 			User.find(queryState).skip(from).limit(limit),
 		]);
 
     res.json({
-        resp
+        total,
+        users
     });
 }
 
@@ -57,9 +58,14 @@ const usersPost =async(req, res = response) => {
     res.json(user);
 }
 
-const usersDelete = (req, res = response) => {
+const usersDelete = async(req, res = response) => {
+
+    const { id } = req.params;
+
+    const user = await User.findByIdAndUpdate( id, { state: false } );
+
     res.json({
-        msg: 'delete API - controller'
+        user
     });
 }
 
