@@ -15,9 +15,11 @@ const {
 	validateIdExistence,
 } = require("../helpers/database-validators");
 
-const { validateJWT } = require('../middlewares/validate-JWT');
-const { validateFields } = require('../middlewares/validate-fields');
-const { isAdmin } = require('../middlewares/validate-role');
+const { 
+	validateJWT,
+	validateFields,
+	isAdmin 
+} = require("../middlewares");
 
 const router = Router();
 
